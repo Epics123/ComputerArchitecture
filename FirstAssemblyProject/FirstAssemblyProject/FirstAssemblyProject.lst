@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler (x64) Version 14.27.29112.0   09/14/21 11:57:11
+Microsoft (R) Macro Assembler (x64) Version 14.29.30038.1   10/04/21 17:41:28
 Test.asm						     Page 1 - 1
 
 
@@ -24,7 +24,7 @@ Test.asm						     Page 1 - 1
  00000015  E8 00000000 E	call ExitProcess
  0000001A			_main ENDP
 				END
-Microsoft (R) Macro Assembler (x64) Version 14.27.29112.0   09/14/21 11:57:11
+Microsoft (R) Macro Assembler (x64) Version 14.29.30038.1   10/04/21 17:41:28
 Test.asm						     Symbols 2 - 1
 
 

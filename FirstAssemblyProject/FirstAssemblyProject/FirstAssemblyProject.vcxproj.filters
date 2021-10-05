@@ -18,5 +18,8 @@
     <MASM Include="Test.asm">
       <Filter>Source Files</Filter>
     </MASM>
+    <MASM Include="..\..\Assignment5\Assignment5.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
   </ItemGroup>
 </Project>
