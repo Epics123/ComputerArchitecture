@@ -6,7 +6,7 @@ CRGB leds[NUM_LEDS];
 
 void setup() {
   // put your setup code here, to run once:
-  FastLED.addLeds<WS2812, LED_PIN, RGB>(leds, NUM_LEDS);
+  FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
   FastLED.setMaxPowerInVoltsAndMilliamps(5, 500);
   FastLED.clear();
   FastLED.show();
@@ -14,9 +14,19 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-   leds[0] = CRGB(255, 0, 0);
-   leds[1] = CRGB(0, 255, 0);
-   leds[2] = CRGB(0, 0, 255);
+   for(int i = 0; i < NUM_LEDS; i++)
+   {
+      leds[i] = CRGB(0, 255 - 20*i, 20 * i);
+      //FastLED.setBrightness(6 * i);
+      FastLED.show();
+      delay(50);
+   }
 
-   FastLED.show();
+   for(int j = NUM_LEDS; j > 0; j--)
+   {
+      leds[j] = CRGB(20 * j, 0, 255 - 20 * j);
+      //FastLED.setBrightness(6-2 * j);
+      FastLED.show();
+      delay(50);
+   }
 }
