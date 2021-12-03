@@ -1,4 +1,3 @@
-#include <Adafruit_NeoPixel.h>
 #include <FastLED.h>
 #define LED_PIN 2
 #define NUM_LEDS 60
@@ -8,7 +7,6 @@
 #define NOISE     10  // Noise/hum/interference in mic signal
 
 CRGB leds[NUM_LEDS];
-Adafruit_NeoPixel strip = new Adafruit_NeoPixel(NUM_LEDS, SENSOR_PIN, NEO_GRB + NEO_KHZ800);
 
 int measureNum = 60; // number of measurements to take
 long soundSignal;
@@ -73,26 +71,38 @@ void loop() {
    height = abs(height - NUM_LEDS + 2) * 2;
    if(height <= 2)
     height = 0;
-
+    
    for(i = 0; i < NUM_LEDS; i++) 
    {
       if(i >= height)               
         leds[i] = CRGB(0, 0, 0);
       else
       {
-        if(i < 15)
-          leds[i] = CRGB(0, 0, 128);
-        else if(i >= 15 && i < 30)
-          leds[i] = CRGB(0, 128, 0);
-        else if(i >= 30 && i < 45)
-          leds[i] = CRGB(128, 128, 0);
-        else if (i >= 45)
-          leds[i] = CRGB(128, 0, 0);
-      }
-        
+        float param = (float)i / (float)height;
+        int r, g, b;
 
-      //FastLED.show();
+        if(param < 0.5)
+        {
+          r = 255 * (1 - (2 * param));
+          g = 255 * (2 * param);
+          b = 0;
+        }
+        else if(param > 0.5)
+        {
+          g = 255 * (1 - (2 * (param - 0.5)));
+          b = 255 * (2 * (param - 0.5));
+          r = 0;
+        }
+        else
+        {
+           r = 0;
+           b = 0;
+           g = 255;
+        }
+        leds[i] = CRGB(r, g, b);
+      }
   }
+  LEDS.setBrightness(10);
   FastLED.show();
   delay(50);
   
