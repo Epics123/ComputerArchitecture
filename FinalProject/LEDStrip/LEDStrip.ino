@@ -38,15 +38,15 @@ void setup() {
 
 // Input a value 0 to 255 to get a color value.
 // The colours are a transition r - g - b - back to r.
-uint32_t Wheel(byte WheelPos) {
+CRGB Wheel(byte WheelPos) {
   if(WheelPos < 85) {
-   return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
+   return CRGB(WheelPos * 3, 255 - WheelPos * 3, 0);
   } else if(WheelPos < 170) {
    WheelPos -= 85;
-   return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+   return CRGB(255 - WheelPos * 3, 0, WheelPos * 3);
   } else {
    WheelPos -= 170;
-   return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+   return CRGB(0, WheelPos * 3, 255 - WheelPos * 3);
   }
 }
 
@@ -65,9 +65,7 @@ void loop() {
   // Calculate bar height based on dynamic min/max levels (fixed point):
   height = TOP * (lvl - minLvlAvg) / (long)(maxLvlAvg - minLvlAvg);
  
-  if(height < 0L)       
-    height = 0;      // Clip output
-  else if(height > TOP) 
+  if(height > TOP) 
     height = TOP;
   //if(height > peak)     
     //peak = height; // Keep 'peak' dot at top
@@ -80,11 +78,24 @@ void loop() {
    {
       if(i >= height)               
         leds[i] = CRGB(0, 0, 0);
-      else 
-        leds[i] = CRGB(255, 0, 0);
+      else
+      {
+        if(i < 15)
+          leds[i] = CRGB(0, 0, 128);
+        else if(i >= 15 && i < 30)
+          leds[i] = CRGB(0, 128, 0);
+        else if(i >= 30 && i < 45)
+          leds[i] = CRGB(128, 128, 0);
+        else if (i >= 45)
+          leds[i] = CRGB(128, 0, 0);
+      }
+        
+
+      //FastLED.show();
   }
   FastLED.show();
+  delay(50);
   
-  Serial.print("Sound Level: ");
-  Serial.println (height);
+  //Serial.print("Sound Level: ");
+  //Serial.println (height);
 }
