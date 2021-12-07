@@ -48,6 +48,45 @@ CRGB Wheel(byte WheelPos) {
   }
 }
 
+void intrepLightColor(int i, int height)
+{
+  int r, g, b;
+  float param = (float)i / (float)height;
+  asm(
+    "start: \n"
+    "ld r16, param \n"
+    "ld r17, 0.5 \n"
+    "cpc r16, r17 \n"
+    "brlt .less \n"
+    "brgt .greater \n"
+    "jmp .else \n"
+    
+    ".less: \n"
+    "ld r18, r \n"
+    "ld r19, 2 \n"
+    "mulf r16, r19"
+    "ld r19, 1 \n"
+    "sub r19, r16 \n"
+    "ld r20, 255 \n"
+    "mulf r19, r20 \n"
+    "st r, r19 \n" 
+
+    "ld r16, param \n"
+    "ld r17, g \n"
+    "ld r18, 2 \n"
+    "mulf r16, r18 \n"
+    "ld r18, 255 \n"
+    "mulf r16, r18 \n"
+    "st g, r16 \n"
+
+    ".greater: \n"
+
+
+
+    ".else: \n"
+  );
+  
+}
 
 void loop() {
   // put your main code here, to run repeatedly:
